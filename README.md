@@ -2,7 +2,6 @@
 
 ## Create Java APP Docker image
 ```bash
-$ docker-compose up -d sonarqube
 $ docker build -t scalian_training-java-hello-world-build:0.0.2-SNAPSHOT --build-arg VERSION=0.0.2-SNAPSHOT  -f devops/build.Dockerfile .
 $ docker build -t scalian_training-java-hello-world:0.0.2  --build-arg VERSION=0.0.2-SNAPSHOT -f devops/Dockerfile .
 
@@ -14,13 +13,22 @@ $
 
 ## Verify sonarqube project
 ```bash
-$ docker run \
+## Prevent next issue
+#https://stackoverflow.com/questions/57998092/docker-compose-error-bootstrap-checks-failed-max-virtual-memory-areas-vm-ma
+sudo sysctl -w vm.max_map_count=262144
+docker-compose up -d sonarqube
+docker-compose logs sonarqube
+
+#Create project in sonarqube by accessing with the browser "localhost:9009"
+# Project name: "devops-training-2025-java-app" 
+docker networks ls
+docker run \
     --rm  -w /app \
-    -v "c:/Users/a.contreras/Documents/workspaces/training/training-java-hello-world:/app" \
-    --network jenkins_scalian_training-net \
+    -v "c:/Users/a.contreras/Documents/workspaces/training/scalian-devops-2024/2025/java-project-base:/app" \
+    --network java-project-base_java-project-net \
     maven:3.8.6-openjdk-11-slim \
     mvn verify sonar:sonar \
-    -Dsonar.projectKey=java-example-manual \
-    -Dsonar.host.url=http://172.16.235.10:9000 \
-    -Dsonar.login=sqp_bffead96e1a5bb8496ff6660825dff8fd8feb2e7
+    -Dsonar.projectKey=devops-training-2025-java-app \
+    -Dsonar.host.url=http://172.16.234.10:9000 \
+    -Dsonar.login=sqp_ac03f002e8191680b95824b9e7c3010f32560494
 ```
