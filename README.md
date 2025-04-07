@@ -2,7 +2,7 @@
 
 ## Create Java APP Docker image
 ```bash
-$ docker build -t scalian_training-java-hello-world-build:0.0.2-SNAPSHOT --build-arg VERSION=0.0.2-SNAPSHOT  -f devops/build.Dockerfile .
+$ #docker build -t scalian_training-java-hello-world-build:0.0.2-SNAPSHOT --build-arg VERSION=0.0.2-SNAPSHOT  -f devops/build.Dockerfile .
 $ docker build -t scalian_training-java-hello-world:0.0.2  --build-arg VERSION=0.0.2-SNAPSHOT -f devops/Dockerfile .
 
 $ docker run -d --rm -p 8085:8080  --name java-app   scalian_training-java-hello-world:0.0.2
@@ -30,5 +30,7 @@ docker run \
     mvn verify sonar:sonar \
     -Dsonar.projectKey=devops-training-2025-java-app \
     -Dsonar.host.url=http://172.16.234.10:9000 \
-    -Dsonar.login=sqp_ac03f002e8191680b95824b9e7c3010f32560494
+    -Dsonar.login=sqp_01291ee195139732bf0509b512c5f8dd4ccc8bf9
+
+docker-compose down
 ```
